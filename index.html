@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  Board:
+  <div class="board">
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card_tr"></div>
+    <div class="card_tr"></div>   
+  </div>
+
+  <hr/>
+  Player's hand:
+  <div class="playerHand">
+    <button class="button">ОБНОВИТЬ</button>
+    <div class="card"></div>
+    <div class="card"></div>   
+  </div> 
+
+  <hr/>
+  Combination:
+  <div class="combination">
+    <div class="combination__flop"></div>
+    <div class="combination__comb"></div>
+    <div class="combination__fd"></div>
+    <div class="combination__sd"></div>
+    <div class="strategy"></div>
+
+  </div>
+
+  <hr/>
+  Matrix:
+    <table id="table"></table>
+    
+    <div class="result-container">
+      <ul class="result-list">
+      </ul>
+    </div>
+
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>
