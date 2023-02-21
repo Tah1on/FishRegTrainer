@@ -134,9 +134,14 @@ export function changeClassName(btb){
     el.className = 'innerTable-row-el';
     
     for (const [key, value] of Object.entries(ACTN.strategy.bet.size)) {
+      if (el.innerHTML === (HAND.playerCards[0]+HAND.playerCards[1]) || 
+          el.innerHTML === (HAND.playerCards[1]+HAND.playerCards[0])) {
+        el.classList.add("innerTable-row-el2")
+        // Skip this iteration if the element's innerHTML matches one of the player's cards
+        continue;
+      }
       if (value.cards.includes(el.innerHTML)) {
         el.classList.add(`innerTable-row-e${key.replace('%', '')}`);
-        break;
       }
     }
 
