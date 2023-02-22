@@ -174,11 +174,36 @@ export function strategySBFlopCB(flopType, combinations) {
   } else if ( flopType === 'ТУЗОВЫЙ СВЯЗАННЫЙ' ){
     combinations.forEach(combination => {
       combination.combs.forEach(comb => {
-        comb.action = {
-          bet: true,
-          size: '25%',
-          check: false,
-          };
+        if (comb.comb.strength === 'nuts' ||
+            comb.comb.rank === 'Overpair' ||
+            comb.comb.rank === 'Top Pair' && comb.rank.topIndex <= 4) {
+              comb.action = {
+                bet: true,
+                size: '75%',
+                check: false,
+                };       
+        } else if (comb.comb.rank === 'Under Pair' ||
+                   comb.comb.rank === 'Top Pair' && comb.rank.topIndex > 4 || 
+                   comb.comb.rank === '2-nd Pair' && comb.rank.topIndex <= 4) {
+          comb.action = {
+            bet: true,
+            size: '50%',
+            check: false,
+            };
+        } else if (comb.comb.rank === '2-nd Pair' && comb.rank.topIndex > 4 ||
+                  comb.comb.rank === '3-nd Pair') {
+          comb.action = {
+            bet: true,
+            size: '25%',
+            check: false,
+            };
+        } else {
+          comb.action = {
+            bet: true,
+            size: '25%',
+            check: false,
+            };
+        }
       });
     });
     return combinations
@@ -223,11 +248,21 @@ export function strategySBFlopCB(flopType, combinations) {
 } else if (flopType === 'ТУЗОВЫЙ СУХОЙ'){
   combinations.forEach(combination => {
     combination.combs.forEach(comb => {
-      comb.action = {
-        bet: true,
-        size: '25%',
-        check: false,
-        };
+      if (comb.comb.strength === 'nuts' ||
+          comb.comb.rank === 'Overpair' ||
+          comb.comb.rank === 'Top Pair' ) {
+            comb.action = {
+              bet: true,
+              size: '50%',
+              check: false,
+              };     
+      } else {
+        comb.action = {
+          bet: true,
+          size: '25%',
+          check: false,
+          };
+      }
     });
   });
   return combinations
