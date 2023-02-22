@@ -173,7 +173,7 @@ shuffButton[0].addEventListener('click', function() {
   //////// 04) HTML ////////
 // Заполняем типы флопа и комбинацию
   updateDeckHtml(BOARD.flopCards, HAND.playerCards);
-  updateComb(REZ.flopTypeSB, REZ.combination + ': ' + ACTN.handStrategy, REZ.flopFD, `${REZ.flopSD} / ${REZ.flopBDSD}`,
+  updateComb(REZ.flopTypeSB, REZ.combination + ': ' + ACTN.handStrategy, REZ.flopFD, REZ.flopSD, REZ.flopBDSD,
     `check: ${ACTN.strategy.check.percent}% / `+`CB: ${ACTN.strategy.bet.percent}% `);
 
   
