@@ -41,13 +41,24 @@ export function updateDeckHtml(flopCards, playerCards) {
 }
 
 // Заполняем комбинации и тип флопа
-export function updateComb(floptype, combination, fd, sd, strategy) {
+export function updateComb(floptype, combination, fd, sd, bdsd, strategy) {
   let ftCmb = document.querySelector('.combination').children;
   ftCmb[0].innerHTML = floptype;
   ftCmb[1].innerHTML = combination;
   ftCmb[2].innerHTML = fd;
   ftCmb[3].innerHTML = sd;
-  ftCmb[4].innerHTML = strategy;
+  ftCmb[4].innerHTML = bdsd;
+  ftCmb[5].innerHTML = strategy;
+}
+
+export function clearComb() {
+  let ftCmb = document.querySelector('.combination').children;
+  ftCmb[0].innerHTML = "";
+  ftCmb[1].innerHTML = "";
+  ftCmb[2].innerHTML = "";
+  ftCmb[3].innerHTML = "";
+  ftCmb[4].innerHTML = "";
+  ftCmb[5].innerHTML = "";
 }
 
 // Заполняем списки
@@ -59,4 +70,8 @@ export function displayPercentage(finalResult) {
     item.innerHTML = `${value.type}: ${value.percent} (${value.count} comb) <div class="progress-bar" style="width: ${value.percent};"></div>`;
     document.getElementsByClassName("result-list")[0].appendChild(item);
   });
+}
+
+export function clearResultsPercentage() {
+  document.getElementsByClassName("result-list")[0].innerHTML = "";
 }

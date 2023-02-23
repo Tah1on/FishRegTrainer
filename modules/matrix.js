@@ -167,6 +167,12 @@ export function changeClassName(btb){
   });
 }
 
+export function clearClassName(btb){
+  const divs = btb.querySelectorAll('.innerTable-row-el');
+  divs.forEach(el => {
+    el.className = 'innerTable-row-el';
+  });
+}
 
 //el.innerHTML= changeSuit(hand, suit2)//el.innerHTML = 'ST<span style="color: red">A</span>CK OVERFLOW'
 
