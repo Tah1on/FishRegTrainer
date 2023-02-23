@@ -86,7 +86,6 @@ function restartApp() {
 
   HAND.playerCards = dealCards(BOARD.shuffleDeck, 2); // 2 карты
   //HAND.playerCards = ['Jd', 'Ad']
-  console.log('playerCards', HAND.playerCards);
 
   BOARD.flopCards = dealCards(BOARD.shuffleDeck, 3); // 3 карты
   //BOARD.flopCards = ['9d', 'Js', '9c']  
@@ -109,10 +108,8 @@ function restartApp() {
 
   //////// 02) ОПРЕДЕЛЯЕМ ТИП ФЛОПА (HU SB) ////////
   REZ.flopTypeSB = defineFlopSB(BOARD.flopCards);
-  console.log('flopTypeSB: ', REZ.flopTypeSB);
 
   REZ.flopTypeBB = defineFlopBB(BOARD.flopCards);
-  console.log('flopTypeBB: ', REZ.flopTypeBB);
 
   //////// 03) ОПРЕДЕЛЯЕМ КОМБИНАЦИЮ ГОТОВЫЕ РУКИ и ДРО ////////
   REZ.combination = findCombination(HAND.playerCards, BOARD.flopCards).comb.rank;
@@ -131,7 +128,6 @@ function restartApp() {
 
   //// Комбы все
   COMB.allBoardCombinations = findAllBoardCombinations(possibleCombsMade, BOARD.flopCards, COMB.livePlayerComb);
-  console.log('allBoardCombinations', COMB.allBoardCombinations);
 
 
   COMB.allCombStraightDraw = findAllStraightDraw(possibleCombsStraightDraw, COMB.allBoardCombinations)
@@ -139,9 +135,6 @@ function restartApp() {
 
   COMB.allCombBDStraightDraw = findAll_BDSD(possibleCombsBDStraightDraw, COMB.allBoardCombinations);
   // console.log('allComb_BDSD: ', COMB.allCombBDStraightDraw);
-
-  console.log('SD: ', REZ.flopSD);
-  console.log('BDSD: ', REZ.flopBDSD);
 
   //// Комбы заполняем экшен стратегии
   COMB.allBoardCombinations = strategySBFlopCB(REZ.flopTypeSB, COMB.allBoardCombinations);
