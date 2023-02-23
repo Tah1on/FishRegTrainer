@@ -77,7 +77,7 @@ export function defineFlopSB(flop) {
     return 'СУХОЙ, 1 ВЫСОКАЯ'
   } else if ( 
       isort[0] <= 8 &&
-      (v[0] === v[1] || v[1] === v[2])
+      (isort[0] === isort[1] || isort[1] === isort[2])
       ){
     return 'НИЗКИЙ, СПАРЕННЫЙ'
   } else if ( 
@@ -196,13 +196,13 @@ export function defineFlopBB(flop) {
   } else if (
       (Object.keys(boardSCount).length === 2) &&
       ((isort[0] <= 8) &&
-       (v[0] === v[1] || v[1] === v[2]))
+       (isort[0] === isort[1] || isort[1] === isort[2]))
       ){
     return 'НИЗКИЙ, СПАРЕННЫЙ ФД'
   } else if (
       (Object.keys(boardSCount).length === 3) &&
       ((isort[0] <= 8) &&
-       (v[0] === v[1] || v[1] === v[2]))
+       (isort[0] === isort[1] || isort[1] === isort[2]))
       ){
     return 'НИЗКИЙ, СПАРЕННЫЙ РАД'
 
