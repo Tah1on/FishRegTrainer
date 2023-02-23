@@ -1,7 +1,7 @@
 import { findCombination, } from './findCombination.js';
 import { findFlushDraw, } from './findDraw.js';
-import { matrixVS, getMainTable } from './matrix.js';
-import { BOARD, COMB } from '../script.js';
+import { matrixVS, getMainTable, } from './matrix.js';
+import { BOARD, COMB, } from '../script.js';
 
 let possibleCombsMade = [
   'Royal Flush',
@@ -61,9 +61,9 @@ export {possibleCombsMade, possibleCombsFlashDraw, possibleCombsStraightDraw, po
 // @param flop -> [Ad, 6c, 9c]
 // @returns -> массив из 1176 рук [['Ah', 'Ad'], ['Ah', 'As']...]
 export function getLivePlayerComb(mtx, flop) {
-  let rez = []
-  let a1 = []
-  let a2 = []
+  let rez = [];
+  let a1 = [];
+  let a2 = [];
   a1 = mtx.flat(Infinity).filter(function(fltr1) { // arr.flat(Infinity) -раскрываем массив до его самой нижней вложенности
     return fltr1 != '----';
   });
@@ -75,7 +75,7 @@ export function getLivePlayerComb(mtx, flop) {
     }
   });
   rez = a2.map(hand => [hand.slice(0,2), hand.slice(2)])
-  return rez
+  return rez;
 }
 
 //// Ищем для живых рук комбинации готовые руки
@@ -131,14 +131,14 @@ export function findAllFlashDraw(combsToFind, board, livePlayerComb) {
   let total = livePlayerComb.length;
     for (let key in combinations) {
     let percent = combinations[key].length / total * 100;
-    if (combinations[key].length > 0) {
-      result.push({
-      type: key,
-      count: combinations[key].length,
-      percent: percent.toFixed(2) + '%',
-      combs: combinations[key],
-  });
-  }
+      if (combinations[key].length > 0) {
+        result.push({
+        type: key,
+        count: combinations[key].length,
+        percent: percent.toFixed(2) + '%',
+        combs: combinations[key],
+      });
+    }
   }
   return result;
 }

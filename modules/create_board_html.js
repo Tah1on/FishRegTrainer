@@ -6,41 +6,35 @@
 export function updateDeckHtml(flopCards, playerCards) {
   let brd = document.querySelectorAll('.board .card');
   let plr = document.querySelectorAll('.playerHand .card');
-  [...flopCards].forEach((card, index) => {
+  flopCards.forEach((card, index) => {
     brd[index].innerHTML = card[0];
     brd[index].className = 'card';
     if (card[1] === 'h') {
       brd[index].classList.add("card_h");
-    }
-    else if (card[1] === 'd') {
+    } else if (card[1] === 'd') {
       brd[index].classList.add("card_d");
-    }
-    else if (card[1] === 's') {
+    } else if (card[1] === 's') {
       brd[index].classList.add("card_s");
-    }
-    else {
+    } else {
       brd[index].classList.add("card_c");
     }
   });
-  [...playerCards].forEach((card, index) => {
+  playerCards.forEach((card, index) => {
     plr[index].innerHTML = card[0];
     plr[index].className = 'card';
     if (card[1] === 'h') {
       plr[index].classList.add("card_h");
-    }
-    else if (card[1] === 'd') {
+    } else if (card[1] === 'd') {
       plr[index].classList.add("card_d");
-    }
-    else if (card[1] === 's') {
+    } else if (card[1] === 's') {
       plr[index].classList.add("card_s");
-    }
-    else {
+    } else {
       plr[index].classList.add("card_c");
     }
   });
 }
 
-// Заполняем комбинации и тип флопа
+// Заполняем Сombination
 export function updateComb(floptype, combination, fd, sd, bdsd, strategy) {
   let ftCmb = document.querySelector('.combination').children;
   ftCmb[0].innerHTML = floptype;
@@ -51,18 +45,18 @@ export function updateComb(floptype, combination, fd, sd, bdsd, strategy) {
   ftCmb[5].innerHTML = strategy;
 }
 
+// Очищаем Сombination
 export function clearComb() {
   let ftCmb = document.querySelector('.combination').children;
-  ftCmb[0].innerHTML = "";
-  ftCmb[1].innerHTML = "";
-  ftCmb[2].innerHTML = "";
-  ftCmb[3].innerHTML = "";
-  ftCmb[4].innerHTML = "";
-  ftCmb[5].innerHTML = "";
+  ftCmb[0].innerHTML = '';
+  ftCmb[1].innerHTML = '';
+  ftCmb[2].innerHTML = '';
+  ftCmb[3].innerHTML = '';
+  ftCmb[4].innerHTML = '';
+  ftCmb[5].innerHTML = '';
 }
 
 // Заполняем списки
-
 export function displayPercentage(finalResult) {
   document.getElementsByClassName("result-list")[0].innerHTML = "";  
   finalResult.forEach(value => {
@@ -71,7 +65,7 @@ export function displayPercentage(finalResult) {
     document.getElementsByClassName("result-list")[0].appendChild(item);
   });
 }
-
+// Очищаем списки
 export function clearResultsPercentage() {
   document.getElementsByClassName("result-list")[0].innerHTML = "";
 }

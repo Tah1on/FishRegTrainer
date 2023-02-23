@@ -20,30 +20,30 @@ export function makeValueMatrix(v, s) {
   let mtrxV = [];
   let mtrxVS = []; 
   for (let i = 0; i < v.length; i++) {
-    mtrxV[i] = []
-    mtrxVS[i] = []
+    mtrxV[i] = [];
+    mtrxVS[i] = [];
     for (let j = 0; j < v.length; j++) {
       // Пары
       if ( v.indexOf(v[i]) === v.indexOf(v[j]) ) {    
         mtrxV[i][j] = v[i]+v[j];
-        mtrxVS[i][j] = makeSuitMatrix(s, mtrxV[i][j])
+        mtrxVS[i][j] = makeSuitMatrix(s, mtrxV[i][j]);
       }
       // Мастевые
       else if ( v.indexOf(v[i]) < v.indexOf(v[j]) ) {
         mtrxV[i][j] = v[i]+v[j]+'s';
-        mtrxVS[i][j] = makeSuitMatrix(s, mtrxV[i][j])
+        mtrxVS[i][j] = makeSuitMatrix(s, mtrxV[i][j]);
       }
       // Разномастные
       else if ( v.indexOf(v[i]) > v.indexOf(v[j]) ) {
         mtrxV[i][j] = v[j]+v[i]+'o';
-        mtrxVS[i][j] = makeSuitMatrix(s, mtrxV[i][j])
+        mtrxVS[i][j] = makeSuitMatrix(s, mtrxV[i][j]);
       }
       else {
-        mtrxV[i][j] = '----' //    
+        mtrxV[i][j] = '----'; //    
       }
     }
   }
-  return [mtrxV, mtrxVS]
+  return [mtrxV, mtrxVS];
 }
 
 //// МАТРИЦЫ с отображением мастей. В кажой ячейки 13*13 содержится подмассив 4*4.
@@ -61,7 +61,7 @@ export function makeValueMatrix(v, s) {
 export function makeSuitMatrix(s, comb) {
   let smallMtrxS = [];            
   for (let i = 0; i < s.length; i++) {
-    smallMtrxS[i] = []
+    smallMtrxS[i] = [];
     for (let j = 0; j < s.length; j++) {
       // Пары
       if ( (comb[0] === comb[1]) && 
@@ -79,17 +79,17 @@ export function makeSuitMatrix(s, comb) {
         smallMtrxS[i][j] = comb[0]+s[i]+comb[1]+s[j];
       }
       else {
-        smallMtrxS[i][j] = '----' //    
+        smallMtrxS[i][j] = '----'; //    
       }
     }
   }
-  return smallMtrxS
+  return smallMtrxS;
 }
 
 ///// Матрицы matrixV AA,AK / matrixVS AhAd, AhAs, ...
-let [matrixV, matrixVS] = makeValueMatrix(VALUES, SUITS)
+let [matrixV, matrixVS] = makeValueMatrix(VALUES, SUITS);
 
-export {matrixV, matrixVS}
+export {matrixV, matrixVS};
 //console.log('matrixV:', matrixV)
 //console.log('matriVS:', matrixVS)
 
@@ -99,17 +99,17 @@ export function getInnerTable(smallTableArr) {
   let innerTable = document.createElement('div')
   innerTable.classList.add("innerTable");
   for (let i = 0; i < smallTableArr.length; i++) {
-    let row = document.createElement('div')
+    let row = document.createElement('div');
     row.classList.add("innerTable-row");
     for (let j = 0; j < smallTableArr[i].length; j++) {
-      let el = document.createElement('div')
-      el.innerHTML = smallTableArr[i][j]
-      el.classList.add("innerTable-row-el")
-      row.appendChild(el)
+      let el = document.createElement('div');
+      el.innerHTML = smallTableArr[i][j];
+      el.classList.add("innerTable-row-el");
+      row.appendChild(el);
     }
-    innerTable.appendChild(row)
+    innerTable.appendChild(row);
   }
-  return innerTable
+  return innerTable;
 }
 
 //// Создание основной матрицы 13*13 с вложенными 4*4
@@ -117,14 +117,14 @@ export function getMainTable(mainTableArr){
   let mainTable = document.createElement('div')
   mainTable.classList.add("mainTable");
   for (let i = 0; i < mainTableArr.length; i++) {
-    let row = document.createElement('div')
+    let row = document.createElement('div');
     row.classList.add("mainTable-row");
     for (let j = 0; j < mainTableArr[i].length; j++) {
-      row.appendChild(getInnerTable(mainTableArr[i][j]))
+      row.appendChild(getInnerTable(mainTableArr[i][j]));
     }
-    mainTable.appendChild(row)    
+    mainTable.appendChild(row);   
   }
-  return mainTable
+  return mainTable;
 }
 
 //// Меняем стили ячеик руки игрока и флопа в матрице
@@ -136,7 +136,7 @@ export function changeClassName(btb){
     for (const [key, value] of Object.entries(ACTN.strategy.bet.size)) {
       if (el.innerHTML === (HAND.playerCards[0]+HAND.playerCards[1]) || 
           el.innerHTML === (HAND.playerCards[1]+HAND.playerCards[0])) {
-        el.classList.add("innerTable-row-el2")
+        el.classList.add("innerTable-row-el2");
         // Skip this iteration if the element's innerHTML matches one of the player's cards
         continue;
       }
@@ -146,24 +146,22 @@ export function changeClassName(btb){
     }
 
     if (  el.innerHTML === `----`) {
-      el.classList.add("innerTable-row-el4")
+      el.classList.add("innerTable-row-el4");
 
     } else if ( el.innerHTML.includes(BOARD.flopCards[0]) ){
-      el.classList.add("innerTable-row-el3")
+      el.classList.add("innerTable-row-el3");
     } else if ( el.innerHTML.includes(BOARD.flopCards[1]) ){
-      el.classList.add("innerTable-row-el3")
+      el.classList.add("innerTable-row-el3");
     } else if ( el.innerHTML.includes(BOARD.flopCards[2]) ){
-      el.classList.add("innerTable-row-el3")
+      el.classList.add("innerTable-row-el3");
 
     } else if ( el.innerHTML === (HAND.playerCards[0]+HAND.playerCards[1]) ||
                 el.innerHTML === (HAND.playerCards[1]+HAND.playerCards[0]) ){
-      el.classList.add("innerTable-row-el2")
+      el.classList.add("innerTable-row-el2");
       
     } else if ( ACTN.strategy.check.cards.includes(el.innerHTML) ){
-      el.classList.add("innerTable-row-el5")
-      
-    }
-    
+      el.classList.add("innerTable-row-el5");      
+    }    
   });
 }
 
@@ -182,8 +180,8 @@ export function clearClassName(btb){
 ////
 // добавление таблицы на страницу
 let bodyTable = document.querySelector ('#table');
-export { bodyTable, }
-bodyTable.appendChild(getMainTable(matrixVS))
+export { bodyTable, };
+bodyTable.appendChild(getMainTable(matrixVS));
 //bodyTable.appendChild(getMainTableSimple(matrixV))
 
 
