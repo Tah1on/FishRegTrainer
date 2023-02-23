@@ -110,21 +110,27 @@ body {
 /*//// КОМБИНАЦИИ ////*/
 .combination {
   grid-area: combination;
-  font-size: 23px;
+  font-size: 22px;
   font-weight: bold;
   color: #000000;
   
 }
-.combination__flop, .combination__comb {
-  color: #000000;
+.combination__flop, .combination__comb, .strategy {
+  text-shadow: 5px 5px 10px rgb(85, 85, 85);  
+}
+.combination__comb {
+  font-size: 30px;
   text-shadow: 5px 5px 10px rgb(85, 85, 85);  
 }
 .combination__fd, .combination__sd, .combination__bdsd {
   font-size: 20px;
-  font-weight: bold;
-  color: #000000;
   text-shadow: 5px 5px 10px rgb(85, 85, 85);  
 }
+.strategy {
+  font-size: 25px;
+  text-shadow: 5px 5px 10px rgb(85, 85, 85);  
+}
+
 /*//// КНОПКА ОБНОВИТЬ ////*/
 button {
   cursor: pointer;
@@ -231,7 +237,7 @@ button:hover {
   flex-wrap: wrap;
 }
 .innerTable-row-el {
-  background-color: rgb(191, 191, 191);
+  background-color: rgb(144, 157, 165);
   min-width: 3px;
   min-height: 3px;
   text-align: center;

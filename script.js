@@ -31,6 +31,8 @@ import { updateDeckHtml, updateComb, clearComb, displayPercentage, clearResultsP
 
 import { strategySBFlopCB, sumActions, getCombinationAction } from './strategy/sbFlopCB.js';
 
+import {} from './modules/test.js';
+
 
 //
 ////////// БОРД и КАРТЫ
@@ -71,72 +73,72 @@ const ACTN = {
   strategy: [],    // all comb without flop
 }
 
-
 export {BOARD, HAND, REZ, COMB, ACTN}
+
 //
 ////////// ВЫПОЛНЕНИЕ РАСЧЕТА
 //
 
 function restartApp() {
-//////// 01) МЕШАЕМ и РАЗДАЕМ КАРТЫ ////////
-BOARD.shuffleDeck = shuffle(DECK);
+  console.clear();
+  //////// 01) МЕШАЕМ и РАЗДАЕМ КАРТЫ ////////
+  BOARD.shuffleDeck = shuffle(DECK);
 
-HAND.playerCards = dealCards(BOARD.shuffleDeck, 2); // 2 карты
-//HAND.playerCards = ['Jd', 'Ad']
-console.log('playerCards', HAND.playerCards);
+  HAND.playerCards = dealCards(BOARD.shuffleDeck, 2); // 2 карты
+  //HAND.playerCards = ['Jd', 'Ad']
+  console.log('playerCards', HAND.playerCards);
 
-BOARD.flopCards = dealCards(BOARD.shuffleDeck, 3); // 3 карты
-//BOARD.flopCards = ['9d', 'Js', '9c']  
+  BOARD.flopCards = dealCards(BOARD.shuffleDeck, 3); // 3 карты
+  //BOARD.flopCards = ['9d', 'Js', '9c']  
 
-BOARD.turnCard = dealCards(BOARD.shuffleDeck, 1);
-BOARD.riverCard = dealCards(BOARD.shuffleDeck, 1);
-console.log('flopCards', BOARD.flopCards);
-// console.log('turnCard:', BOARD.turnCard)
-// console.log('riverCard:', BOARD.riverCard)
+  BOARD.turnCard = dealCards(BOARD.shuffleDeck, 1);
+  BOARD.riverCard = dealCards(BOARD.shuffleDeck, 1);
+  console.log('flopCards', BOARD.flopCards);
+  // console.log('turnCard:', BOARD.turnCard)
+  // console.log('riverCard:', BOARD.riverCard)
 
-// Комбинируем доску и руку игрока
+  // Комбинируем доску и руку игрока
 
-HAND.playerAndFlop = [...HAND.playerCards, ...BOARD.flopCards];
-// console.log('playerAndFlop: ', HAND.playerAndFlop);
-HAND.playerAndTurn = [...HAND.playerCards, ...BOARD.flopCards, ...BOARD.turnCard];
-// console.log('playerAndTurn: ', HAND.playerAndTurn);
-HAND.playerAndRiver = [...HAND.playerCards, ...BOARD.flopCards, ...BOARD.turnCard, ...BOARD.riverCard];
-// console.log('playerAndRiver: ', HAND.playerAndRiver);
+  HAND.playerAndFlop = [...HAND.playerCards, ...BOARD.flopCards];
+  // console.log('playerAndFlop: ', HAND.playerAndFlop);
+  HAND.playerAndTurn = [...HAND.playerCards, ...BOARD.flopCards, ...BOARD.turnCard];
+  // console.log('playerAndTurn: ', HAND.playerAndTurn);
+  HAND.playerAndRiver = [...HAND.playerCards, ...BOARD.flopCards, ...BOARD.turnCard, ...BOARD.riverCard];
+  // console.log('playerAndRiver: ', HAND.playerAndRiver);
 
 
-//////// 02) ОПРЕДЕЛЯЕМ ТИП ФЛОПА (HU SB) ////////
-REZ.flopTypeSB = defineFlopSB(BOARD.flopCards);
-// console.log('flopTypeSB: ', REZ.flopTypeSB);
+  //////// 02) ОПРЕДЕЛЯЕМ ТИП ФЛОПА (HU SB) ////////
+  REZ.flopTypeSB = defineFlopSB(BOARD.flopCards);
+  console.log('flopTypeSB: ', REZ.flopTypeSB);
 
-REZ.flopTypeBB = defineFlopBB(BOARD.flopCards);
-console.log('flopTypeBB: ', REZ.flopTypeBB);
+  REZ.flopTypeBB = defineFlopBB(BOARD.flopCards);
+  console.log('flopTypeBB: ', REZ.flopTypeBB);
 
-//////// 03) ОПРЕДЕЛЯЕМ КОМБИНАЦИЮ ГОТОВЫЕ РУКИ и ДРО ////////
-REZ.combination = findCombination(HAND.playerCards, BOARD.flopCards).comb.rank;
-// console.log('REZ.combination: ', REZ.combination);
-REZ.flopFD = findCombination(HAND.playerCards, BOARD.flopCards).comb.FD;
-// console.log('flopFD: ', REZ.flopFD);
-REZ.flopSD = findCombination(HAND.playerCards, BOARD.flopCards).comb.SD;
-// console.log('flopSD: ', REZ.flopSD);
+  //////// 03) ОПРЕДЕЛЯЕМ КОМБИНАЦИЮ ГОТОВЫЕ РУКИ и ДРО ////////
+  REZ.combination = findCombination(HAND.playerCards, BOARD.flopCards).comb.rank;
+  // console.log('REZ.combination: ', REZ.combination);
+  REZ.flopFD = findCombination(HAND.playerCards, BOARD.flopCards).comb.FD;
+  // console.log('flopFD: ', REZ.flopFD);
+  REZ.flopSD = findCombination(HAND.playerCards, BOARD.flopCards).comb.SD;
+  // console.log('flopSD: ', REZ.flopSD);
 
-REZ.flopBDSD = findCombination(HAND.playerCards, BOARD.flopCards).comb.BDSD;
-// console.log('flopSD: ', REZ.flopSD);
+  REZ.flopBDSD = findCombination(HAND.playerCards, BOARD.flopCards).comb.BDSD;
+  // console.log('flopSD: ', REZ.flopSD);
 
-//// Комбы живые
+  //// Комбы живые
   COMB.livePlayerComb = getLivePlayerComb(matrixVS, BOARD.flopCards)
-// console.log('live', COMB.livePlayerComb);
+  // console.log('live', COMB.livePlayerComb);
 
-//// Комбы все
+  //// Комбы все
   COMB.allBoardCombinations = findAllBoardCombinations(possibleCombsMade, BOARD.flopCards, COMB.livePlayerComb);
   console.log('allBoardCombinations', COMB.allBoardCombinations);
 
-  
-  COMB.allCombStraightDraw = findAllStraightDraw(possibleCombsStraightDraw, COMB.allBoardCombinations)
-  console.log('allComb_SD: ', COMB.allCombStraightDraw);
-  
-  COMB.allCombBDStraightDraw = findAll_BDSD(possibleCombsBDStraightDraw, COMB.allBoardCombinations);
-  console.log('allComb_BDSD: ', COMB.allCombBDStraightDraw);
 
+  COMB.allCombStraightDraw = findAllStraightDraw(possibleCombsStraightDraw, COMB.allBoardCombinations)
+  // console.log('allComb_SD: ', COMB.allCombStraightDraw);
+
+  COMB.allCombBDStraightDraw = findAll_BDSD(possibleCombsBDStraightDraw, COMB.allBoardCombinations);
+  // console.log('allComb_BDSD: ', COMB.allCombBDStraightDraw);
 
   console.log('SD: ', REZ.flopSD);
   console.log('BDSD: ', REZ.flopBDSD);
@@ -145,24 +147,24 @@ REZ.flopBDSD = findCombination(HAND.playerCards, BOARD.flopCards).comb.BDSD;
   COMB.allBoardCombinations = strategySBFlopCB(REZ.flopTypeSB, COMB.allBoardCombinations);
 
 
-//// Стратегия
-ACTN.strategy = sumActions(COMB.allBoardCombinations);
-// console.log(`check: ${ACTN.strategy.check.percent}% `+
-//             `(comb:${ACTN.strategy.check.count}); `+
-//             `bet: ${ACTN.strategy.bet.percent}% `+
-//             `(comb:${ACTN.strategy.bet.count})`)
+  //// Стратегия
+  ACTN.strategy = sumActions(COMB.allBoardCombinations);
+  // console.log(`check: ${ACTN.strategy.check.percent}% `+
+  //             `(comb:${ACTN.strategy.check.count}); `+
+  //             `bet: ${ACTN.strategy.bet.percent}% `+
+  //             `(comb:${ACTN.strategy.bet.count})`)
 
 
 
-ACTN.handStrategy = getCombinationAction(COMB.allBoardCombinations, REZ.combination, HAND.playerCards)
-// console.log('handStrategy: ', ACTN.handStrategy);
+  ACTN.handStrategy = getCombinationAction(COMB.allBoardCombinations, REZ.combination, HAND.playerCards)
+  // console.log('handStrategy: ', ACTN.handStrategy);
 
-//////// 04) HTML ////////
-// Заполняем типы флопа и комбинацию
-updateDeckHtml(BOARD.flopCards, HAND.playerCards);
-clearClassName(bodyTable);
-clearResultsPercentage();
-clearComb()
+  //////// 04) HTML ////////
+  // Заполняем типы флопа и комбинацию
+  updateDeckHtml(BOARD.flopCards, HAND.playerCards);
+  clearClassName(bodyTable);
+  clearResultsPercentage();
+  clearComb()
 
 }
 
@@ -174,7 +176,7 @@ function errorApp() {
   changeClassName(bodyTable);
 
   displayPercentage(COMB.allBoardCombinations)
-  }
+}
 
 
 let shuffButton = document.getElementsByClassName('button'); // Кнопка
