@@ -111,7 +111,7 @@ function testFindCombination() {
     console.assert(result.comb.rank === test.expected, `For hand ${test.hand} and board ${test.board}, expected ${test.expected}, but got ${result.comb.rank}`);
   });
 }    
-// testFindCombination();
+testFindCombination();
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -244,10 +244,10 @@ function testFind_SD() {
 
   testCases.forEach((test) => {
     const result = find_SD(test.hand, test.board);
-    console.assert(result === test.expected, `For hand ${test.hand} and board ${test.board}, expected ${test.expected}, but got ${result}`);
+    console.assert(result[0] === test.expected, `For hand ${test.hand} and board ${test.board}, expected ${test.expected}, but got ${result[0]}`);
   });
 }    
-// testFind_SD();
+testFind_SD();
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -292,18 +292,33 @@ function testFind_BDSD() {
     {
       hand: ['4s', '2h'],
       board: ['9c', '8h', '7s'],
-      expected: 'NO Backdoor straight draws',
+      expected: 'NO BDSD',
     },
     {
       hand: ['Ks', 'Jh'],
       board: ['Tc', '8h', '3s'],
       expected: 'BDOESD (2 card)',
     },
+    {
+      hand: ['Qs', '4h'],
+      board: ['9c', '7h', '6s'],
+      expected: 'BDOESD (1 card)',
+    },
+    {
+      hand: ['Ks', '2h'],
+      board: ['Jc', 'Th', '8s'],
+      expected: 'BDOESD (1 card)',
+    },
+    {
+      hand: ['9s', '7h'],
+      board: ['Ac', '6h', '4s'],
+      expected: 'BDOESD (2 card)',
+    },
   ];
 
   testCases.forEach((test) => {
     const result = find_BDSD(test.hand, test.board);
-    console.assert(result === test.expected, `For hand ${test.hand} and board ${test.board}, expected ${test.expected}, but got ${result}`);
+    console.assert(result[0] === test.expected, `For hand ${test.hand} and board ${test.board}, expected ${test.expected}, but got ${result[0]}`);
   });
 }    
 // testFind_BDSD();

@@ -165,6 +165,7 @@ export function changeClassName(btb){
   });
 }
 
+// Очищаем стили
 export function clearClassName(btb){
   const divs = btb.querySelectorAll('.innerTable-row-el');
   divs.forEach(el => {

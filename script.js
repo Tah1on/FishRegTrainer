@@ -28,9 +28,9 @@ import {
 import { updateDeckHtml, updateComb, clearComb, displayPercentage, clearResultsPercentage } from './modules/create_board_html.js';
 
 // import {CRD} from './cards.js';
-
+strategyBBvFlopCB
 import { strategySBFlopCB, sumActions, getCombinationAction } from './strategy/sbFlopCB.js';
-
+import { strategyBBvFlopCB, } from './strategy/bbFlopvCB.js';
 import {} from './modules/test.js';
 
 
@@ -56,8 +56,11 @@ const REZ = {
   flopTypeBB: [],    // flop type BB
   combination: [], // combination
   flopFD: [],      // flash draws
+  flopBDFD: [],    // BDFD
   flopSD: [],      // straight draw
+  flopSDout: [],
   flopBDSD: [],      // BDSD
+  flopBDSDout: [],
 }
 
 const COMB = {
@@ -87,12 +90,13 @@ function restartApp() {
   HAND.playerCards = dealCards(BOARD.shuffleDeck, 2); // 2 карты
   //HAND.playerCards = ['Jd', 'Ad']
 
+
   BOARD.flopCards = dealCards(BOARD.shuffleDeck, 3); // 3 карты
   //BOARD.flopCards = ['9d', 'Js', '9c']  
 
   BOARD.turnCard = dealCards(BOARD.shuffleDeck, 1);
   BOARD.riverCard = dealCards(BOARD.shuffleDeck, 1);
-  console.log('flopCards', BOARD.flopCards);
+
   // console.log('turnCard:', BOARD.turnCard)
   // console.log('riverCard:', BOARD.riverCard)
 
@@ -109,18 +113,25 @@ function restartApp() {
   //////// 02) ОПРЕДЕЛЯЕМ ТИП ФЛОПА (HU SB) ////////
   REZ.flopTypeSB = defineFlopSB(BOARD.flopCards);
 
+
   REZ.flopTypeBB = defineFlopBB(BOARD.flopCards);
+
 
   //////// 03) ОПРЕДЕЛЯЕМ КОМБИНАЦИЮ ГОТОВЫЕ РУКИ и ДРО ////////
   REZ.combination = findCombination(HAND.playerCards, BOARD.flopCards).comb.rank;
   // console.log('REZ.combination: ', REZ.combination);
   REZ.flopFD = findCombination(HAND.playerCards, BOARD.flopCards).comb.FD;
   // console.log('flopFD: ', REZ.flopFD);
+  REZ.flopBDFD = findCombination(HAND.playerCards, BOARD.flopCards).comb.BDFD;
+  // console.log('flopFD: ', REZ.flopFD);
   REZ.flopSD = findCombination(HAND.playerCards, BOARD.flopCards).comb.SD;
-  // console.log('flopSD: ', REZ.flopSD);
+  REZ.flopSDout = findCombination(HAND.playerCards, BOARD.flopCards).comb.SD_out;
+
 
   REZ.flopBDSD = findCombination(HAND.playerCards, BOARD.flopCards).comb.BDSD;
-  // console.log('flopSD: ', REZ.flopSD);
+  REZ.flopBDSDout = findCombination(HAND.playerCards, BOARD.flopCards).comb.BDSD_out;
+
+
 
   //// Комбы живые
   COMB.livePlayerComb = getLivePlayerComb(matrixVS, BOARD.flopCards)
@@ -128,6 +139,7 @@ function restartApp() {
 
   //// Комбы все
   COMB.allBoardCombinations = findAllBoardCombinations(possibleCombsMade, BOARD.flopCards, COMB.livePlayerComb);
+  // console.log('allBoardCombinations', COMB.allBoardCombinations);
 
 
   COMB.allCombStraightDraw = findAllStraightDraw(possibleCombsStraightDraw, COMB.allBoardCombinations)
@@ -136,9 +148,12 @@ function restartApp() {
   COMB.allCombBDStraightDraw = findAll_BDSD(possibleCombsBDStraightDraw, COMB.allBoardCombinations);
   // console.log('allComb_BDSD: ', COMB.allCombBDStraightDraw);
 
+
   //// Комбы заполняем экшен стратегии
   COMB.allBoardCombinations = strategySBFlopCB(REZ.flopTypeSB, COMB.allBoardCombinations);
-
+  
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // console.log('vCB: ', strategyBBvFlopCB(REZ.flopTypeBB, COMB.allBoardCombinations));
 
   //// Стратегия
   ACTN.strategy = sumActions(COMB.allBoardCombinations);
@@ -163,8 +178,13 @@ function restartApp() {
 
 function errorApp() {
   //////// 04) HTML ////////
-  updateComb(REZ.flopTypeSB, REZ.combination + ': ' + ACTN.handStrategy, REZ.flopFD, REZ.flopSD, REZ.flopBDSD,
-  `check: ${ACTN.strategy.check.percent}% / `+`CB: ${ACTN.strategy.bet.percent}% `);
+  updateComb(REZ.flopTypeSB, 
+             REZ.combination + ': ' + ACTN.handStrategy,
+             (REZ.flopFD === 'NO FD') ? '' : REZ.flopFD,
+             REZ.flopBDFD, 
+             (REZ.flopSD === '') || (REZ.flopSD === 'NO SD') ? '' : REZ.flopSD + ' => ' + REZ.flopSDout, // ? истина : ложь
+             (REZ.flopBDSD === 'NO BDSD') ? 'NO BDSD' : (REZ.flopBDSD === '') ? '' : REZ.flopBDSD + ' => ' + REZ.flopBDSDout,
+             `check: ${ACTN.strategy.check.percent}% / `+`CB: ${ACTN.strategy.bet.percent}% `);
   // Меняем заливку у руки и флопа
   changeClassName(bodyTable);
 

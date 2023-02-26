@@ -39,7 +39,7 @@ let possibleCombsStraightDraw = [
   'DBB (2 card)', // Double Gutshot (Double-Belly Buster)
   'Gutshot (2 card)',
   'Gutshot (1 card)',
-  'NO Straight Draw',
+  'NO SD',
   'OESD ???',
 ];
 
@@ -50,7 +50,7 @@ let possibleCombsBDStraightDraw = [
   'BDDBB (1 card)',
   'BDGutshot (2 card)',
   'BDGutshot (1 card)',
-  'BDNO BD Straight Draw',
+  'NO BDSD',
   'BDOESD ???',
 ];
 

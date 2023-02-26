@@ -35,14 +35,15 @@ export function updateDeckHtml(flopCards, playerCards) {
 }
 
 // Заполняем Сombination
-export function updateComb(floptype, combination, fd, sd, bdsd, strategy) {
+export function updateComb(floptype, combination, fd, bdfd, sd, bdsd, strategy) {
   let ftCmb = document.querySelector('.combination').children;
   ftCmb[0].innerHTML = floptype;
   ftCmb[1].innerHTML = combination;
   ftCmb[2].innerHTML = fd;
-  ftCmb[3].innerHTML = sd;
-  ftCmb[4].innerHTML = bdsd;
-  ftCmb[5].innerHTML = strategy;
+  ftCmb[3].innerHTML = bdfd;
+  ftCmb[4].innerHTML = sd;
+  ftCmb[5].innerHTML = bdsd;
+  ftCmb[6].innerHTML = strategy;
 }
 
 // Очищаем Сombination
@@ -54,6 +55,7 @@ export function clearComb() {
   ftCmb[3].innerHTML = '';
   ftCmb[4].innerHTML = '';
   ftCmb[5].innerHTML = '';
+  ftCmb[6].innerHTML = '';
 }
 
 // Заполняем списки
