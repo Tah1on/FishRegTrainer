@@ -198,6 +198,18 @@ button:hover {
   box-shadow: 10px 10px 20px 0px #000000;
 }
 
+.mainTable::after {
+  content: attr(data-strategysb);
+  font-size: 17px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* .mainTable::after {
+  content: attr(data-sbcb);
+  font-size: 15px;
+  font-weight: bold;
+} */
 
 .headerRow {
   display: flex;
