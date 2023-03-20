@@ -1,0 +1,485 @@
+body {
+  user-select: none;
+  /* cursor: default; */
+  display :grid;
+  grid-template-areas:
+  'headerBoard       headerMatrix   headerCombs'
+  'board             matrix         resultCombs'        
+  'headerPlayerHand  matrix         resultCombs' 
+  'playerHand        matrix         resultCombs' 
+  'headerAction      matrix         resultCombs'
+  'action            matrix         resultCombs'
+  'headerCombination matrix         resultCombs'
+  'combination       matrix         resultCombs';
+
+  margin: 0;
+  grid-template-columns: 470px max-content;
+  grid-template-rows: 20px 210px 20px 210px 20px 90px 20px 300px;
+  grid-column-gap: 5px;
+
+  background-image:
+  radial-gradient(circle at 29% 55%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 4%,transparent 4%, transparent 44%,transparent 44%, transparent 100%),
+  radial-gradient(circle at 85% 89%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 51%,transparent 51%, transparent 52%,transparent 52%, transparent 100%),
+  radial-gradient(circle at 6% 90%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 53%,transparent 53%, transparent 64%,transparent 64%, transparent 100%),
+  radial-gradient(circle at 35% 75%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 6%,transparent 6%, transparent 98%,transparent 98%, transparent 100%),
+  radial-gradient(circle at 56% 75%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 16%,transparent 16%, transparent 23%,transparent 23%, transparent 100%),
+  radial-gradient(circle at 42% 0%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 3%,transparent 3%, transparent 26%,transparent 26%, transparent 100%),
+  radial-gradient(circle at 29% 28%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 51%,transparent 51%, transparent 75%,transparent 75%, transparent 100%),
+  radial-gradient(circle at 77% 21%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 35%,transparent 35%, transparent 55%,transparent 55%, transparent 100%),
+  radial-gradient(circle at 65% 91%, hsla(200,10%,90%,0.05) 0%, hsla(200,10%,90%,0.05) 46%,transparent 46%, transparent 76%,transparent 76%, transparent 100%),
+  linear-gradient(45deg, hsla(200,10%,50%,1),hsla(200,10%,30%,1));
+
+  min-height:400px;
+  padding:20px;
+  color:#DDDDDD;
+  font-family: verdana, Arial, sans-serif;
+}
+.board {
+  grid-area: board;
+  width:100%;
+  min-height: 220px;
+}
+.playerHand {
+  grid-area: playerHand;
+  width:100%;
+  min-height: 220px;
+}
+/*//// ТЕКСТ ////*/
+.headerBoard {
+  grid-area: headerBoard;
+  margin: 0;
+}
+.headerPlayerHand {
+  grid-area: headerPlayerHand;
+  margin: 0;
+}
+.headerAction {
+  grid-area: headerAction;
+  margin: 0;
+}
+.headerCombination {
+  grid-area: headerCombination;
+  margin: 0;
+}
+.headerMatrix {
+  grid-area: headerMatrix;
+  margin: 0;
+}
+.headerCombs {
+  grid-area: headerCombs;
+  margin: 0;
+}
+
+/*//// КАРТЫ ////*/
+.card {
+  font-size: 130px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align:center;
+  box-sizing: border-box;  
+  width: 130px;
+  height: 180px;
+  margin:10px;
+  float: left;  
+  background-color: rgb(80, 78, 78);
+  background-position-x: 0px;
+  background-position-y: center;
+  background-repeat: none;
+  background-position: middle center;  
+  border: 1px #555555 solid;
+  border-radius: 16px;
+  -webkit-box-shadow: 10px 10px 20px 0px #000000; 
+  box-shadow: 10px 10px 20px 0px #000000;
+}
+.card_h {
+  background-color: rgb(160,63,64);
+}
+.card_d {
+  background-color: rgb(0,126,161);
+}
+.card_s {
+  background-color: rgb(70,71,72);
+}
+.card_c {
+  background-color: rgb(64,134,21);
+}
+.card_tr {
+  display: none; 
+}
+
+/*//// КОМБИНАЦИИ ////*/
+.combination {
+  grid-area: combination;
+  font-size: 22px;
+  font-weight: bold;
+  color: #000000;
+  
+}
+.combination__flop, .combination__comb, .strategy {
+  text-shadow: 5px 5px 10px rgb(85, 85, 85);  
+}
+.combination__comb {
+  font-size: 30px;
+  text-shadow: 5px 5px 10px rgb(85, 85, 85);  
+}
+.combination__fd, .combination__bdfd, .combination__sd, .combination__bdsd {
+  font-size: 20px;
+  text-shadow: 5px 5px 10px rgb(85, 85, 85);  
+}
+.strategy {
+  font-size: 25px;
+  text-shadow: 5px 5px 10px rgb(85, 85, 85);  
+}
+
+/*//// КНОПКА ОБНОВИТЬ ////*/
+button {
+  cursor: pointer;
+  width:120px;
+  height:70px;
+  background-color: rgb(190, 190, 190);
+  text-align:center;
+  font-size: 18px;
+  font-weight: bold;
+  margin:20px;
+  border: 1px solid #000;
+  border-radius: 30px;
+  -webkit-box-shadow: 10px 10px 20px 0px #000000; 
+  box-shadow: 10px 10px 20px 0px #000000;
+  transition: all .60s ease-in-out;
+  transform-origin: center bottom;
+}
+button:hover {
+  transform: translateY(-5px);
+}
+
+/*//// КНОПКИ ACTION ////*/
+.action {
+  grid-area: action;
+  margin: 0;
+}
+
+.action_size1, .action_size2, .action_size3, .action_size4 {
+  margin: 10px;
+  width: 80px;
+  height: 50px;
+  color: #000000;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  -webkit-box-shadow: 10px 10px 20px 0px #000000; 
+  box-shadow: 10px 10px 20px 0px #000000;
+  transition: all .60s ease-in-out;
+  /* transform-origin: center bottom; */
+}
+.action_size1 {
+  background-color: rgb(144, 157, 165);
+}
+.action_size2 {
+  background-color: rgb(202, 197, 159);
+}
+.action_size3 {
+  background-color: rgb(181, 154, 81);
+}
+.action_size4 {
+  background-color: rgb(141, 105, 98);
+}
+
+/*//// МАТРИЦА ////*/
+#table {
+  grid-area: matrix;
+}
+
+
+.mainTable {
+  color: #000000;
+  background-color: rgb(153, 172, 183);
+  padding: 1px;    
+  -webkit-box-shadow: 10px 10px 20px 0px #000000; 
+  box-shadow: 10px 10px 20px 0px #000000;
+}
+
+
+.headerRow {
+  display: flex;
+  column-gap: 1px;
+  margin-bottom: 1px;
+}
+
+.headerEmptyCell {
+  min-width: 27px;
+}
+.headerCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.valueCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgb(144, 157, 165);
+  min-width: 34px;
+  min-height: 9px;
+  text-align: center;
+  /* border: 1px solid #000; */
+  padding: 1px;
+  font-size: 16px;
+}
+.suitContainer  {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+.suitCell {
+  background-color: rgb(144, 157, 165);
+  min-width: 6px;
+  min-height: 6px;
+  text-align: center;
+  border: 1px solid #000;
+  padding: 1px;
+  font-size: 0px;
+}
+
+.rowHeaderCell {
+  display: flex;
+  align-items: center;
+}
+.rowValueCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgb(144, 157, 165);
+  min-width: 15px;
+  min-height: 34px;
+  text-align: center;
+  /* border: 1px solid #000; */
+  padding: 1px;
+  font-size: 16px;
+}
+.rowSuitContainer  {
+  display: flex;
+  flex-direction: column;
+}
+.rowSuitCell {
+  background-color: rgb(144, 157, 165);
+  min-width: 6px;
+  min-height: 6px;
+  text-align: center;
+  border: 1px solid #000;
+  padding: 1px;
+  font-size: 0px;
+}
+
+
+
+.mainTable-row {
+  display: flex;
+  column-gap: 1px;
+  margin-bottom: 1px;
+}
+.innerTable {
+  background: rgb(129, 129, 129);
+}
+.innerTable-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.innerTable-row-el {
+  background-color: rgb(144, 157, 165);
+  width: 6px;
+  height: 6px;
+  text-align: center;
+  border: 1px solid #000;
+  padding: 1px;
+  color: transparent;
+}
+.innerTable-row-el[data-cards="empty"] {
+  background-color:rgb(35, 35, 35);
+}
+.innerTable-row-el[data-cards="flop"] {
+  background-color:rgb(61, 82, 87);
+}
+.innerTable-row-el[data-cards="player"] {
+  border: 1px solid rgb(255, 0, 0);
+  scale: 1.5;
+}
+.innerTable-row-el[data-cards="player"]::before {
+  content: "★";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  font-size: 9px;
+  color: rgb(255, 0, 0);
+}
+
+.innerTable-row-el[data-actionsb="check"], .innerTable-row-el[data-actionbb="fold"] {
+  background-color:rgb(144, 157, 165);
+}
+.innerTable-row-el[data-actionsb="25%"], .innerTable-row-el[data-actionbb="call"] {
+  background-color:rgb(252, 241, 164);
+}
+.innerTable-row-el[data-actionsb="50%"], .innerTable-row-el[data-actionbb="2.5x"] {
+  background-color:rgb(234, 186, 58);
+}
+.innerTable-row-el[data-actionsb="75%"], .innerTable-row-el[data-actionbb="3x"] {
+  background-color: rgb(149, 68, 49);
+}
+.innerTable-row-el[data-actionbb="4x"] {
+  background-color:rgb(98, 42, 30);
+}
+
+.innerTable-row-el[data-actionsb="check"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionsb);
+  position: absolute;
+  transform: translateY(-110%);
+  width: 170px;
+  height: 40px;
+  background-color: rgb(144, 157, 165);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px;
+}
+.innerTable-row-el[data-actionbb="fold"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionbb);
+  position: absolute;
+  transform: translateY(-110%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(144, 157, 165);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px;
+}
+
+.innerTable-row-el[data-actionsb="25%"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionsb);
+  position: absolute;
+  transform: translateY(-110%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(252, 241, 164);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px;
+}
+.innerTable-row-el[data-actionbb="call"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionbb);
+  position: absolute;
+  transform: translateY(-110%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(252, 241, 164);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px;
+}
+
+.innerTable-row-el[data-actionsb="50%"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionsb);
+  position: absolute;
+  transform: translateY(-100%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(234, 186, 58);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px
+}
+.innerTable-row-el[data-actionbb="2.5x"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionbb);
+  position: absolute;
+  transform: translateY(-100%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(234, 186, 58);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px
+}
+
+.innerTable-row-el[data-actionsb="75%"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionsb);
+  position: absolute;
+  transform: translateY(-100%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(149, 68, 49);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px
+}
+.innerTable-row-el[data-actionbb="3x"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionbb);
+  position: absolute;
+  transform: translateY(-100%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(149, 68, 49);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px
+}
+
+.innerTable-row-el[data-actionbb="4x"]:hover::before {
+  content: attr(data-text) ": " attr(data-actionbb);
+  position: absolute;
+  transform: translateY(-100%);
+  width: 150px;
+  height: 40px;
+  background-color: rgb(98, 42, 30);
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 1;
+  font-size: 25px;
+  color: black;
+  text-align: center;
+  line-height: 40px
+}
+
+/*//// COMBS ////*/
+.result-container {
+  grid-area: resultCombs;
+  font-size: 15px;
+  font-weight: bold;
+  color: #070e3f;
+}
+.progress-bar {
+  height: 10px;
+  background-color: rgb(50, 75, 71);
+  border-radius: 5px;  
+}
