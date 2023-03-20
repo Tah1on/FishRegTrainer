@@ -105,6 +105,7 @@ export function getInnerTable(smallTableArr) {
       let el = document.createElement('div');
       el.innerHTML = smallTableArr[i][j];
       el.classList.add("innerTable-row-el");
+      el.dataset.text = smallTableArr[i][j]
       row.appendChild(el);
     }
     innerTable.appendChild(row);
@@ -112,13 +113,116 @@ export function getInnerTable(smallTableArr) {
   return innerTable;
 }
 
+//// make header
+export function makeHeaderRow(VALUES, SUITS) {
+  let headerRow = document.createElement('div');
+  headerRow.classList.add('headerRow');
+  
+  // create top-left empty cell
+  let headerEmptyCell = document.createElement('div');
+  headerEmptyCell.classList.add('headerEmptyCell');
+  headerRow.appendChild(headerEmptyCell);
+
+  // create header cells for each value
+  VALUES.forEach((value) => {
+    // create a group cell for each value
+    let headerCell = document.createElement('div');
+    headerCell.classList.add('headerCell');
+    headerRow.appendChild(headerCell);
+
+    let valueCell = document.createElement('div');
+    valueCell.classList.add('valueCell');
+    valueCell.textContent = value;
+
+    headerCell.appendChild(valueCell)
+
+    // create container div for the suit cells
+    let suitContainer = document.createElement('div');
+    suitContainer.classList.add('suitContainer');
+    headerCell.appendChild(suitContainer);
+    // create four suit cells within each group cell
+    SUITS.forEach((suit) => {
+      let suitCell = document.createElement('div');
+      suitCell.classList.add('suitCell');
+      suitCell.textContent = suit;
+
+      switch (suit) {
+        case 'h':
+          suitCell.style.backgroundColor = 'rgb(160,63,64)';
+          break;
+        case 'd':
+          suitCell.style.backgroundColor = 'rgb(0,126,161)';
+          break;
+        case 's':
+          suitCell.style.backgroundColor = 'rgb(70,71,72)';
+          break;
+        case 'c':
+          suitCell.style.backgroundColor = 'rgb(64,134,21)';
+          break;
+        default:
+          suitCell.style.backgroundColor = 'gray';
+      }
+
+      suitContainer.appendChild(suitCell);
+    });
+  });
+
+  return headerRow;
+}
+
 //// Создание основной матрицы 13*13 с вложенными 4*4
 export function getMainTable(mainTableArr){
+  let headerRow = makeHeaderRow(VALUES, SUITS)
+
   let mainTable = document.createElement('div')
   mainTable.classList.add("mainTable");
+  
+  mainTable.appendChild(headerRow); 
   for (let i = 0; i < mainTableArr.length; i++) {
     let row = document.createElement('div');
     row.classList.add("mainTable-row");
+
+    // create header cell for this row
+    let rowHeaderCell = document.createElement('div');
+    rowHeaderCell.classList.add('rowHeaderCell');
+    row.appendChild(rowHeaderCell);
+
+    let rowValueCell = document.createElement('div');
+    rowValueCell.classList.add('rowValueCell');
+    rowValueCell.textContent = VALUES[i];
+    rowHeaderCell.appendChild(rowValueCell);
+
+    let rowSuitContainer = document.createElement('div');
+    rowSuitContainer.classList.add('rowSuitContainer');
+    rowHeaderCell.appendChild(rowSuitContainer);
+
+    // create four suit cells within each group cell
+    SUITS.forEach((suit) => {
+      let rowSuitCell = document.createElement('div');
+      rowSuitCell.classList.add('rowSuitCell');
+      rowSuitCell.textContent = suit;
+
+      switch (suit) {
+        case 'h':
+          rowSuitCell.style.backgroundColor = 'rgb(160,63,64)';
+          break;
+        case 'd':
+          rowSuitCell.style.backgroundColor = 'rgb(0,126,161)';
+          break;
+        case 's':
+          rowSuitCell.style.backgroundColor = 'rgb(70,71,72)';
+          break;
+        case 'c':
+          rowSuitCell.style.backgroundColor = 'rgb(64,134,21)';
+          break;
+        default:
+          rowSuitCell.style.backgroundColor = 'gray';
+      }
+
+      rowSuitContainer.appendChild(rowSuitCell);
+    });
+
+    // create cells for this row
     for (let j = 0; j < mainTableArr[i].length; j++) {
       row.appendChild(getInnerTable(mainTableArr[i][j]));
     }
@@ -127,41 +231,66 @@ export function getMainTable(mainTableArr){
   return mainTable;
 }
 
-//// Меняем стили ячеик руки игрока и флопа в матрице
-export function changeClassName(btb){
+//// Добавляем атрибуты ячейкам руки игрока и флопа в матрице и действий SB
+export function changeAttributeSB(btb){
   const divs = btb.querySelectorAll('.innerTable-row-el');
   divs.forEach(el => {
     el.className = 'innerTable-row-el';
     
-    for (const [key, value] of Object.entries(ACTN.strategy.bet.size)) {
-      if (el.innerHTML === (HAND.playerCards[0]+HAND.playerCards[1]) || 
-          el.innerHTML === (HAND.playerCards[1]+HAND.playerCards[0])) {
-        el.classList.add("innerTable-row-el2");
-        // Skip this iteration if the element's innerHTML matches one of the player's cards
-        continue;
-      }
+    for (const [key, value] of Object.entries(ACTN.strategySB.bet.size)) {
       if (value.cards.includes(el.innerHTML)) {
-        el.classList.add(`innerTable-row-e${key.replace('%', '')}`);
+        el.dataset.actionsb = key;
       }
     }
 
-    if (  el.innerHTML === `----`) {
-      el.classList.add("innerTable-row-el4");
+    if ( ACTN.strategySB.check.cards.includes(el.innerHTML) ){
+      el.dataset.actionsb = 'check';    
+    } 
 
-    } else if ( el.innerHTML.includes(BOARD.flopCards[0]) ){
-      el.classList.add("innerTable-row-el3");
-    } else if ( el.innerHTML.includes(BOARD.flopCards[1]) ){
-      el.classList.add("innerTable-row-el3");
-    } else if ( el.innerHTML.includes(BOARD.flopCards[2]) ){
-      el.classList.add("innerTable-row-el3");
+    if ( el.innerHTML === `----`) {
+      el.dataset.cards = 'empty';
+
+    } else if ( el.innerHTML.includes(BOARD.flopCards[0]) ||
+                el.innerHTML.includes(BOARD.flopCards[1]) ||
+                el.innerHTML.includes(BOARD.flopCards[2]) ){
+      el.dataset.cards = 'flop';
 
     } else if ( el.innerHTML === (HAND.playerCards[0]+HAND.playerCards[1]) ||
                 el.innerHTML === (HAND.playerCards[1]+HAND.playerCards[0]) ){
-      el.classList.add("innerTable-row-el2");
-      
-    } else if ( ACTN.strategy.check.cards.includes(el.innerHTML) ){
-      el.classList.add("innerTable-row-el5");      
-    }    
+      el.dataset.cards = 'player';
+    }   
+  });
+}
+//// Добавляем атрибуты ячейкам руки игрока и флопа в матрице и действий BB
+export function changeAttributeBB(btb){
+  const divs = btb.querySelectorAll('.innerTable-row-el');
+  divs.forEach(el => {
+    el.className = 'innerTable-row-el';
+    
+    for (const [key, value] of Object.entries(ACTN.strategyBB.xr.size)) {
+      if (value.cards.includes(el.innerHTML)) {
+        el.dataset.actionbb = key;
+      }
+    }
+
+    if ( ACTN.strategyBB.call.cards.includes(el.innerHTML) ){
+      el.dataset.actionbb = 'call';    
+    } else if ( ACTN.strategyBB.fold.cards.includes(el.innerHTML) ){
+      el.dataset.actionbb = 'fold';    
+    }
+
+    if ( el.innerHTML === `----`) {
+      el.dataset.cards = 'empty';
+
+    } else if ( el.innerHTML.includes(BOARD.flopCards[0]) ||
+                el.innerHTML.includes(BOARD.flopCards[1]) ||
+                el.innerHTML.includes(BOARD.flopCards[2]) ){
+      el.dataset.cards = 'flop';
+
+    } else if ( el.innerHTML === (HAND.playerCards[0]+HAND.playerCards[1]) ||
+                el.innerHTML === (HAND.playerCards[1]+HAND.playerCards[0]) ){
+      el.dataset.cards = 'player';
+    }   
   });
 }
 
@@ -169,7 +298,9 @@ export function changeClassName(btb){
 export function clearClassName(btb){
   const divs = btb.querySelectorAll('.innerTable-row-el');
   divs.forEach(el => {
-    el.className = 'innerTable-row-el';
+    el.removeAttribute('data-cards')
+    el.removeAttribute('data-actionsb')
+    el.removeAttribute('data-actionbb')
   });
 }
 
