@@ -76,7 +76,7 @@ export function makeSuitMatrix(s, comb) {
       // Разномастные
       else if ( (comb.includes('o')) && 
       (SUITS.indexOf(s[i]) != SUITS.indexOf(s[j])) ){    
-        smallMtrxS[i][j] = comb[0]+s[i]+comb[1]+s[j];
+        smallMtrxS[i][j] = comb[0]+s[j]+comb[1]+s[i];
       }
       else {
         smallMtrxS[i][j] = '----'; //    
