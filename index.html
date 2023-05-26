@@ -5,57 +5,43 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trainer</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="01_CSS_STYLES/00_styles.css">
+  <link rel="stylesheet" href="01_CSS_STYLES/01_switch_zone.css">
+  <link rel="stylesheet" href="01_CSS_STYLES/02_trainer_zone.css">
+  <link rel="stylesheet" href="01_CSS_STYLES/03_range_zone.css">
+  <link rel="stylesheet" href="01_CSS_STYLES/04_combs_zone.css">
 </head>
 
 <body>
-<!-- 1 -->
-  <header class="headerBoard">Board</header>
-
-  <div class="board">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card_tr"></div>
-    <div class="card_tr"></div>   
+  <!-- 0 -->
+  <div class="switch-container">
+    <header class="switch-header">Настройки:</header>
+    <div class="switch-zone"></div>
+  </div>
+  <!-- 1 -->
+  <div class="trainer-container">
+    <header class="trainer-header">Тренажер:</header>
+    <div class="trainer-zone"></div>
+  </div>
+  <!-- 3 -->
+  <div class="range-container">
+    <header class="range-header">Диапазон:</header>
+    <div class="range-zone">
+      <div class="matrix-zone"></div>
+      <div class="action-info-zone"></div>
+      <div class="comb-matrix-zone"></div>
+    </div>
+  </div>
+  <!-- 4 -->
+  <div class="combs-container">
+    <header class="combs-header">Комбинации:</header>
+    <div class="combs-zone"></div>
   </div>
 
-<!-- 2 -->
-  <header class="headerPlayerHand">Player's hand:</header>
-  <div class="playerHand">
-    <button class="button">ОБНОВИТЬ</button>
-    <div class="card"></div>
-    <div class="card"></div>   
-  </div>
 
-<!-- 3 -->
-  <header class="headerAction">Action:</header>
-  <div class="action">
-    <button class="action_size1">check</button>
-    <button class="action_size2">25%</button>
-    <button class="action_size3">50%</button>
-    <button class="action_size4">75%</button>
-  </div>
 
-<!-- 4 -->
-  <header class="headerCombination">Combination:</header>
-  <div class="combination">
-    <div class="combination__flop"></div>
-    <div class="combination__comb"></div>
-    <div class="combination__fd"></div>
-    <div class="combination__bdfd"></div>
-    <div class="combination__sd"></div>
-    <div class="combination__bdsd"></div>
-  </div>
 
-<!-- 5 -->
-  <header class="headerMatrix">Matrix:</header>
-  <table id="table"></table>
 
-  <header class="headerCombs">Combs:</header>
-  <div class="result-container">
-    <ul class="result-list"></ul>
-  </div>
 
   <script src="script.js" type="module"></script>
 </body>
