@@ -1,0 +1,46 @@
+body {
+  user-select: none; /* отключаем возможность выделения текста на странице */
+  display: grid; /* задает тип отображения элемента body как сетку */  
+  grid-template-areas: /* шаблон расположения областей сетки */
+  'switchContainer   trainerContainer   rangeContainer   combsContainer';
+  grid-template-columns: 140px 450px 580px 460px; /* ширина колонок сетки */
+  grid-column-gap: 3px; /* расстояние между колонками сетки */
+  background: #a0a0a0;
+  margin: 3px;
+}
+
+/* ОСНОВНЫЕ КОНТЕЙНЕРЫ */
+.switch-container,
+.trainer-container,
+.range-container,
+.combs-container {
+  z-index: 1;
+  border: 1px solid #000;
+  border-radius: 20px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* внутренняя тень */
+}
+/* ЗАНОСИМ В ОСНОВНУЮ СЕТКУ */
+.switch-container {
+  grid-area: switchContainer;
+}
+.trainer-container {
+  grid-area: trainerContainer;
+}
+.range-container {
+  grid-area: rangeContainer;
+}
+.combs-container {
+  grid-area: combsContainer;
+}
+
+/* ЗАГОЛОВКИ */
+.switch-header, 
+.trainer-header, 
+.range-header, 
+.combs-header {
+  display: flex;
+  justify-content: center; /* выравнивание по горизонтали */
+  font-family: "Calibri", "Open Sans", "Century Gothic";
+  font-size: 20px;
+  text-align: center; /* выравнивание по центру */
+}

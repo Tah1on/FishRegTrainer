@@ -1,0 +1,81 @@
+/*//// КОМБИНАЦИИ ////*/
+.combs-zone {
+  font-size: 15px;
+  font-family: "Calibri", "Open Sans", "Century Gothic";
+  font-weight: bold;
+  color: #070e3f;
+}
+/*//// PROGRESS BARs ////*/
+.progress-bar-main {
+  height: 10px;
+  background-color:#222a5b;
+  border-radius: 0px 5px 5px 0px; 
+}
+.progress-bar-draw {
+  height: 8px;
+  background-color:#051504;
+  border-radius: 0px 5px 5px 0px;
+}
+/*//// КОМБИНАЦИИ ////*/
+.combs-all-count {
+  padding-left: 10px;
+  font-size: 18px;
+}
+.combs-made, .combs-nothing {
+  font-size: 19px;
+  color:#222a5b;
+  padding-left: 10px;
+}
+.combs-made-doper-plus, .combs-made-pairs {
+  font-size: 18px;
+  color: #051504;
+  padding-left: 20px;
+}
+.combs-made-doper-plus-sub, .combs-made-pairs-sub, .combs-nothing-sub {
+  font-size: 16px;
+  color: #0b3f08;
+  padding-left: 40px;
+}
+.combs-made-sub, .combs-nothing-sub {
+  display: flex;
+  gap: 10px;
+}
+.combs-made-draw, .combs-nothing-draw {
+  color: #051504;
+  font-size: 15px;
+}
+/*//// СТРАТЕГИЯ ////*/
+.strategy-header {
+  font-size: 18px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.strategy-list {  
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
+.progress-bar {
+  height: 8px;
+  border: 1px solid #000;
+  background-color: #324b47;
+  border-radius: 0px 5px 5px 0px;
+}
+.progress-bar[data-action="fold"] {
+  background-color: rgb(95, 93, 93);
+}
+.progress-bar[data-action="check"],
+.progress-bar[data-action="call"] {
+  background-color: rgb(158, 184, 217);
+}
+.progress-bar[data-action="CB 25%"],
+.progress-bar[data-action="xR 2.5x"] {
+  background-color: rgb(252, 241, 164);
+}
+.progress-bar[data-action="CB 50%"],
+.progress-bar[data-action="xR 3x"] {
+  background-color: rgb(234, 186, 58);
+}
+.progress-bar[data-action="CB 75%"],
+.progress-bar[data-action="xR 4x"] {
+  background-color: rgb(149, 68, 49);
+}
