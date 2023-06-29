@@ -1,0 +1,80 @@
+body {
+  user-select: none; /* отключаем возможность выделения текста на странице */
+  background: #a0a0a0;
+  margin: 3px;
+}
+.flop-type {
+  font-size: 25px;
+  font-family: verdana, Arial, sans-serif;
+  font-weight: bold;
+}
+.error-count {
+  font-size: 15px;
+  font-family: verdana, Arial, sans-serif;
+}
+.error-type {
+  font-size: 20px;
+  font-family: "Calibri", "Open Sans", "Century Gothic";
+}
+
+.error-hands {
+  display: flex;
+  flex-direction: column;
+}
+.hand {
+  display: flex;
+}
+.flopZone {
+  display: flex;
+}
+.playerZone {
+  display: flex;
+  padding-left: 15px;
+}
+.card {
+  width: 40px;
+  height: 55px;
+  margin: 5px;
+
+  font-size: 35px;
+  font-family: verdana, Arial, sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  text-align:center;
+
+  box-sizing: border-box;
+
+  border: 1px solid #555555;
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* внутренняя тень */
+}
+/* РУБАШКА */
+.card.shirt {
+  --s: 12px; /* control the size */  
+  --_g: #0000 83%,#b09f79 85% 100%,#0000 101%;
+  background:
+    radial-gradient(27% 29% at right ,var(--_g)) calc(var(--s)/ 2) var(--s),
+    radial-gradient(27% 29% at left  ,var(--_g)) calc(var(--s)/-2) var(--s),
+    radial-gradient(29% 27% at top   ,var(--_g)) 0 calc(var(--s)/ 2),
+    radial-gradient(29% 27% at bottom,var(--_g)) 0 calc(var(--s)/-2)
+    #2e4130;
+  background-size: calc(2*var(--s)) calc(2*var(--s));
+}
+.card_h {
+  background-color: rgb(160,63,64);
+}
+.card_d {
+  background-color: rgb(0,126,161);
+}
+.card_s {
+  background-color: rgb(70,71,72);
+}
+.card_c {
+  background-color: rgb(64,134,21);
+}
+.turn {
+  display: none;
+}
+.river {
+  display: none; 
+}
